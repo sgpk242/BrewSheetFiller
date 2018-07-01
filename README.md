@@ -7,6 +7,7 @@ Save file on your computer wherever your want. Several things in the code will n
 1. Change default field options
 2. Change name of original Brewer's Friend pdf
 3. Change name of new pdf (needs to be edited each time or the new pdf will be overwritten)
+
 See the code for commented tips. 
 
 Finally, install the PyPDF2 and reportlab packages using your command line package manager. 
