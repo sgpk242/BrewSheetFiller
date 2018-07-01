@@ -6,15 +6,14 @@ from reportlab.lib.pagesizes import letter
 # replace string below with file path to folder containing the original brew sheet pdf
 file_path = "C:\\FILE\PATH\TO\BREW\SHEET\FOLDER"
 # replace defaults below according to preferences and order of fields listed starting on line 21
-defaults = ["brewer name", "recipe name", "brew date", "beer type", 
-		"batch size", "boil time", "batch num", "efficiency", "", "", 
-		"single infusion mash", "yeast", "OG", "FG", "abv", 
-		"ibus", "srm"]
-   
+defaults = ["Sean Keenan", "", "", "", 
+		"25 L", "60 mins", "", "70%", "", "", 
+		"", "", "", "", "", "", ""]
+
 # coordinates for ingredients, mash, and hops pdf fields
-ingredients_space = [45, 225]
-mash_space = [300, 500, 525]
-hops_space = [45, 120, 170, 220]
+ingredients_space = [40, 225]
+mash_space = [300, 465, 515]
+hops_space = [40, 120, 170, 220]
 
 # fields - change "hasDefault" to True if you want the command line to provide a default option,
 # False if you don't want a default option to be displayed in the command line
@@ -28,7 +27,7 @@ batch_num = {"hasDefault": False, "hasMultiple": False, "pos": (395, 645)}
 exp_efficiency = {"hasDefault": True, "hasMultiple": False, "pos": (525, 645)}
 ingredients = {"hasDefault": False, "hasMultiple": True, "pos": (40, 583)}
 hops = {"hasDefault": False, "hasMultiple": True, "pos": (40, 405)}
-mash_info = {"hasDefault": True, "hasMultiple": True, "pos": (300, 583)}
+mash_info = {"hasDefault": False, "hasMultiple": True, "pos": (300, 583)}
 yeast_type = {"hasDefault": False, "hasMultiple": False, "pos": (470, 421)}
 exp_og = {"hasDefault": False, "hasMultiple": False, "pos": (230, 294)}
 exp_fg = {"hasDefault": False, "hasMultiple": False, "pos": (230, 277)}
@@ -56,41 +55,32 @@ inputs = {"brewer": brewer,
 
 packet = io.BytesIO()
 canv = canvas.Canvas(packet, pagesize = letter)
+
+# command line logic
 for i, (key, value) in enumerate(inputs.items()):
-	data_arr = []
+	data_arr = []		
 	if (value["hasDefault"] and not value["hasMultiple"]):
 		user_input = input("{} (0 for default '{}'): ".format(key, defaults[i]))
-	elif (value["hasDefault"] and value["hasMultiple"]):	
-		user_input = input("{} (0 for default '{}', 1 for multiple): ".format(key, defaults[i]))
-		if (user_input == "1"):
+	elif (value["hasMultiple"]):
+		if key is "ingredients":
 			while (user_input != "n"):
-				user_input = input("name: ")
-				data_arr.append(user_input)
-				user_input = input("temp: ")
-				data_arr.append(user_input)
-				user_input = input("time: ")
-				data_arr.append(user_input)
+				data_arr.append(input("ingredient type: "))
+				data_arr.append(input("amount: "))
 				user_input = input("keep going? (y/n): ")
 			user_input = ""
-	elif (value["hasMultiple"]):
-		if (key == "ingredients"):
+		elif key is "hops":
 			while (user_input != "n"):
-				user_input = input("ingredient type: ")
-				data_arr.append(user_input)
-				user_input = input("amount: ")
-				data_arr.append(user_input)
+				data_arr.append(input("hop type: "))
+				data_arr.append(input("amount: "))
+				data_arr.append(input("AA %: "))
+				data_arr.append(input("boil time: "))
 				user_input = input("keep going? (y/n): ")
 			user_input = ""
 		else:
 			while (user_input != "n"):
-				user_input = input("hop type: ")
-				data_arr.append(user_input)
-				user_input = input("amount: ")
-				data_arr.append(user_input)
-				user_input = input("AA %: ")
-				data_arr.append(user_input)
-				user_input = input("boil time: ")
-				data_arr.append(user_input)
+				data_arr.append(input("mash type: "))
+				data_arr.append(input("temp: "))
+				data_arr.append(input("time: "))
 				user_input = input("keep going? (y/n): ")
 			user_input = ""
 	else:
@@ -98,27 +88,29 @@ for i, (key, value) in enumerate(inputs.items()):
 	
 	if user_input is "0":
 		user_input = defaults[i]
+	elif (user_input == "end"):
+		break
 
 	if not data_arr:
 		canv.drawString(value["pos"][0], value["pos"][1], user_input)
 	else:
-		if key is "ingredients":
+		if (key == "ingredients"):
 			height = value["pos"][1]
 			for counter, item in enumerate(data_arr):
 				canv.drawString(ingredients_space[counter%2], height, item)
 				if counter%2:
 					height -= 17
-		if key is "hops":
+		elif (key == "hops"):
 			height = value["pos"][1]
 			for counter, item in enumerate(data_arr):
 				canv.drawString(hops_space[counter%4], height, item)
-				print("counter%4= {}".format(counter%4))
-				if (counter%3 == 0 and counter != 0):
+				if ((counter+1)%4 == 0 and counter != 0):
 					height -= 17
-		if key is "mash_info":
+		else:
+			height = value["pos"][1]
 			for counter, item in enumerate(data_arr):
 				canv.drawString(mash_space[counter%3], height, item)
-				if counter%3:
+				if ((counter+1)%3 == 0 and counter != 0):
 					height -= 17
 
 canv.save()
