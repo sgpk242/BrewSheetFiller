@@ -123,7 +123,6 @@ output = PdfFileWriter()
 page = existing_pdf.getPage(0)
 page.mergePage(new_pdf.getPage(0))
 output.addPage(page)
-# change "destination.pdf" to the name of your desired new pdf
-outputStream = open("destination.pdf", "wb")
+outputStream = open(input("new file name (with .pdf): "), "wb")
 output.write(outputStream)
 outputStream.close()
