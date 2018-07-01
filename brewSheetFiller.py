@@ -114,7 +114,6 @@ for i, (key, value) in enumerate(inputs.items()):
 					height -= 17
 
 canv.save()
-
 packet.seek(0)
 new_pdf = PdfFileReader(packet)
 os.chdir(file_path)
