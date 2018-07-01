@@ -11,7 +11,7 @@ e.g. on Windows, type ```pip install PyPDF2 reportlab```
 
 ***To run:***
 
-Navigate to the folder containing brewSheetFiller.py. Type ```python brewSheetFiller.py``` and fill out the fields, pressing "return" to enter a blank space or to move to the next field, or typing ```0``` to fill in the default option.  
+In the terminal, navigate to the folder containing brewSheetFiller.py. Type ```python brewSheetFiller.py``` and fill out the fields, pressing "return" to enter a blank space or to move to the next field, or typing ```0``` to fill in the default option.  
 
 ***Note:***
 
