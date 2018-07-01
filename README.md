@@ -6,7 +6,6 @@ Command-line python program to digitally fill out [Brewer's Friend recipe sheet]
 Save file on your computer wherever your want. Several things in the code will need to be editted to suit your needs:
 1. Change default field options
 2. Change name of original Brewer's Friend PDF
-3. Change name of new PDF (needs to be edited each time or the new PDF will be overwritten)
 
 See the code for commented tips. 
 
