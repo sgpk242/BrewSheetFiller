@@ -117,8 +117,8 @@ canv.save()
 packet.seek(0)
 new_pdf = PdfFileReader(packet)
 os.chdir(file_path)
-# change "original_brew_sheet.pdf" to the name of your brew sheet pdf
-existing_pdf = PdfFileReader(open("original_brew_sheet.pdf", "rb"))
+# change "brewersfriend_allgrainsheet.pdf" to the name of your brew sheet pdf
+existing_pdf = PdfFileReader(open("brewersfriend_allgrainsheet.pdf", "rb"))
 output = PdfFileWriter()
 page = existing_pdf.getPage(0)
 page.mergePage(new_pdf.getPage(0))
