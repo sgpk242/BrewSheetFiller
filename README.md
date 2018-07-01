@@ -3,11 +3,7 @@ Command-line python program to digitally fill out [Brewer's Friend recipe sheet]
 
 ***To install:***
 
-Save file on your computer wherever your want. Several things in the code will need to be editted to suit your needs:
-1. Change default field options
-2. Change name of original Brewer's Friend PDF
-
-See the code for commented tips. 
+Save file on your computer wherever your want. Several things in the code might need to be editted to suit your needs - see the code for commented tips. 
 
 Finally, install the PyPDF2 and reportlab packages using your command line package manager. 
 
